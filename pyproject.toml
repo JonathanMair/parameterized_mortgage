@@ -1,18 +1,20 @@
 [tool.poetry]
-name = "sensible_mortgage"
+name = "parameterized_mortgage"
 version = "0.1.0"
 description = "A simple python package to provide mortgage repayment calculations using the French method of amortization"
 authors = ["Jonathan Mair <jonathan.mair@gmail.com>"]
 license = "GNU V3"
 readme = "README.md"
-packages = [{include = "mortgage_calculator"}]
+packages = [{include = "àrameterized_mortgage"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 pandas = "^2.0.3"
+param = "^1.13.0"
 
 [tool.poetry.group.dev.dependencies]
 131228_pytest_1 = "^1.0.0"
+pytest = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core"]
