@@ -5,7 +5,7 @@ description = "A simple python package to provide mortgage repayment calculation
 authors = ["Jonathan Mair <jonathan.mair@gmail.com>"]
 license = "GNU V3"
 readme = "README.md"
-packages = [{include = "àrameterized_mortgage"}]
+packages = [{include = "parameterized_mortgage"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
