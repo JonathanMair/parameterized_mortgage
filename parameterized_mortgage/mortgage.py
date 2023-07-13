@@ -8,12 +8,14 @@ class Loan(param.Parameterized):
     E = P . r . (1+r)^n/((1+r)^n - 1)
 
     Where:
+
         E = periodic_repayment
         P = principal at the beginning of the mortgage
         r = the periodic interest rate
         n = the number of periods
 
     """
+    # user-defined settings
     principal = param.Number(
         100000, doc="The principal or loan amount at the beginning of the mortgage.", bounds=(0, None)
     )
@@ -23,26 +25,37 @@ class Loan(param.Parameterized):
     number_of_periods = param.Number(
         240, doc="Number of periods over which payments will be spread.", bounds=(1, None)
     )
+
+    # outputs
     periodic_repayment = param.Number(
-        doc="Calculated repayment due each period.", constant=True
+        doc="Repayment due each period. Not settable by the user.",
+        constant=True
+    )
+    total_interest = param.Number(
+        doc="Calculated amount of interest payable over the whole lifetime of the loan. . Not settable by the user.",
+        constant=True
+    )
+    mean_interest_per_payment_period = param.Number(
+        doc="Calculated amount of interest payable over the whole lifetime of the loan. Not settable by the user.",
+        constant=True
     )
 
-    def _get_periodic_repayment(self):
-        """Calculate the periodic repayment using the independent parameters"""
-        periodic_repayment = \
-            self.principal * self.periodic_rate/100 \
-            * (1+self.periodic_rate/100)**self.number_of_periods\
-            / (((1+self.periodic_rate/100)**self.number_of_periods) - 1)
-        return periodic_repayment
-
+    # todo: do I need watch=True here?
     @param.depends('principal', 'periodic_rate', 'number_of_periods', on_init=True, watch=True)
-    def _update_periodic_repayment(self):
+    def calculate_dependent_params(self):
+        """Calculates periodic repayment and information about interest on a loan and sets dependent params."""
+        principal, periodic_rate, number_of_periods = self.principal, self.periodic_rate, self.number_of_periods
+        periodic_repayment = \
+            principal * periodic_rate / 100 \
+            * (1 + periodic_rate / 100) ** number_of_periods \
+            / (((1 + periodic_rate / 100) ** number_of_periods) - 1) \
+                if periodic_rate != 0 and principal != 0 else 0.0
+        total_interest = periodic_repayment * number_of_periods - principal
+        mean_interest = total_interest / number_of_periods
         with param.edit_constant(self):
-            self.periodic_repayment = self._get_periodic_repayment()
+            self.periodic_repayment, self.total_interest, self.mean_interest_per_payment_period = \
+            periodic_repayment, total_interest, mean_interest
 
-    @param.depends('principal', 'periodic_rate', 'number_of_periods')
-    def view_periodic_payment(self):
-        return pn.pane.Str(str(self._get_periodic_repayment()))
 
 
 class Mortgage(Loan):
