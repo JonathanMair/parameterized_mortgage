@@ -1,1 +1,1 @@
-from .mortgage import Mortgage
+from .mortgage import Mortgage, Loan

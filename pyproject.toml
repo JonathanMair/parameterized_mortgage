@@ -11,10 +11,13 @@ packages = [{include = "parameterized_mortgage"}]
 python = "^3.11"
 pandas = "^2.0.3"
 param = "^1.13.0"
+panel = "^1.2.0"
 
 [tool.poetry.group.dev.dependencies]
 131228_pytest_1 = "^1.0.0"
 pytest = "^7.4.0"
+jupyter = "1.0.0"
+notebook = "6.5.4"
 
 [build-system]
 requires = ["poetry-core"]

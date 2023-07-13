@@ -1,1 +1,9 @@
 .idea
+.idea/
+.idea/*
+
+jupyter
+jupyter/
+jupyter/*
+
+.DS_Store
