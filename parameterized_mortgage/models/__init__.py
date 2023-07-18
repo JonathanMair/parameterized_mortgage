@@ -1,2 +1,2 @@
-from .mortgage import BaseLoan, Mortgage
+from .loan_types import LoanBase, Mortgage
 
