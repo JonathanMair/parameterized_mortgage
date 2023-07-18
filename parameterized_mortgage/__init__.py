@@ -1,1 +1,1 @@
-from .mortgage import Mortgage, Loan
+from parameterized_mortgage.models.mortgage import Mortgage, BaseLoan
