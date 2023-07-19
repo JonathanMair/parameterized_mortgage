@@ -8,17 +8,6 @@ from .calcs import loan_repayment_metrics
 
 class LoanBase(param.Parameterized):
     """Parameterized class to model a mortgage loan and provide methods to calculate repayments and schedule.
-
-    Based on the following equation:
-    E = P . r . (1+r)^n/((1+r)^n - 1)
-
-    Where:
-
-        E = periodic_repayment
-        P = principal at the beginning of the mortgage
-        r = the periodic interest rate
-        n = the number of periods
-
     """
     # user settings
     principal = param.Number(
@@ -36,6 +25,8 @@ class LoanBase(param.Parameterized):
     total_interest = param.Number(constant=True, precedence=-1)
     mean_interest_per_payment_period = param.Number(constant=True, precedence=-1)
 
+
+    # todo: format the df or work out how to do it in panel, esp wrt rounding of figures
     @param.depends('principal', 'periodic_rate', 'number_of_periods', on_init=True, watch=True)
     def calculate_dependent_params(self, reference_period_repayment_period_ratio: int = 1):
         """Calculates periodic repayment and information about interest on a loan and sets dependent params.
@@ -63,14 +54,36 @@ class LoanBase(param.Parameterized):
         df = pd.DataFrame(list(d.values()), index=list(d.keys()))
         return pn.pane.DataFrame(df)
 
-    def panel_param(self, parameters: [str], widgets: Dict):
-        """Returns a customised panel.Param object linked to this instance"""
+    def custom_widgets(self, parameters: [str]=None, widgets: Dict=None, name: str=None):
+        """Return customised widgets for panel.Param object."""
+        if widgets is None:
+            widgets={
+                "principal": {
+                    "type": pn.widgets.FloatInput,
+                    "start": 0,
+                    "step": 1000
+                },
+                "periodic_rate": {
+                    "type": pn.widgets.FloatInput,
+                    "start": 0,
+                    "end": 5,
+                    "step": 0.01,
+                },
+                "number_of_periods": {
+                    "type": pn.widgets.IntInput,
+                    "start": 0,
+                    "step": 1
+                }
+            }
+        return widgets
 
 
 
 
 '''todo: set up panel_param() method to return suitable param set with annual interest rate 
 add a param for annual interest rate and use it to set a dependent method to update superclass interest property
+
+set precedence on periodic variables from super() to prevent them from appearing in panel.Param
 '''
 
 
@@ -85,6 +98,8 @@ class Mortgage(LoanBase):
     )
 
     def __init__(self, loan_amount, annual_rate, term_in_years):
+        self.annual_interest_rate = annual_rate
+        self.mortgage_term = term_in_years
         kwargs = {
             'principal': loan_amount,
             'periodic_rate': annual_rate / 12,
@@ -92,8 +107,13 @@ class Mortgage(LoanBase):
         }
         super().__init__(**kwargs)
 
+        # set precedence to hide from pn.Param members of super that will now depend on parameters of this subclass
+        self.param.periodic_rate.precedence = -1
+        self.param.number_of_periods.precedence = -1
 
-    @param.depends('principal', 'periodic_rate', 'number_of_periods', on_init=True, watch=True)
+
+    # TODOOO THISSSSSS....
+    @param.depends('principal',  on_init=True, watch=True)
     def calculate_dependent_params(self):
         return super().calculate_dependent_params(reference_period_repayment_period_ratio=12)
 
