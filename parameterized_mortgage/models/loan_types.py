@@ -1,6 +1,7 @@
+import pandas as pd
 import param
 import panel as pn
-import typing
+from typing import Dict
 
 from .calcs import loan_repayment_metrics
 
@@ -19,7 +20,7 @@ class LoanBase(param.Parameterized):
         n = the number of periods
 
     """
-    # parameters
+    # user settings
     principal = param.Number(
         100000, doc="The principal or loan amount at the beginning of the mortgage.", bounds=(0, None)
     )
@@ -31,9 +32,9 @@ class LoanBase(param.Parameterized):
     )
 
     # calculated properties
-    periodic_repayment: float
-    total_interest: float
-    mean_interest_per_payment_period: float
+    periodic_repayment = param.Number(constant=True, precedence=-1)
+    total_interest = param.Number(constant=True, precedence=-1)
+    mean_interest_per_payment_period = param.Number(constant=True, precedence=-1)
 
     @param.depends('principal', 'periodic_rate', 'number_of_periods', on_init=True, watch=True)
     def calculate_dependent_params(self, reference_period_repayment_period_ratio: int = 1):
@@ -53,23 +54,19 @@ class LoanBase(param.Parameterized):
         return periodic_repayment, total_interest, mean_interest
 
     @param.depends('calculate_dependent_params')
-    def live_repayment_amount(self, rate=None):
-        self.periodic_rate = rate if rate is not None else self.periodic_rate
-        self.calculate_dependent_params()
-        return pn.panel(self.periodic_repayment)
+    def live_df(self, passed_dict: Dict=None):
+        d = {
+            'Periodic Repayment': self.periodic_repayment,
+            'Total Interest': self.total_interest,
+            'Mean Periodic Interest': self.mean_interest_per_payment_period
+        } if passed_dict is None else passed_dict
+        df = pd.DataFrame(list(d.values()), index=list(d.keys()))
+        return pn.pane.DataFrame(df)
 
-    @param.depends('calculate_dependent_params')
-    def live_mortgage_metrics_panel(self):
-        s = f"""* Repayment amount: {self.periodic_repayment:.2f}\n
-        * Total interest: {self.total_interest:.2f}\n
-        * Mean interest: {self.mean_interest_per_payment_period:.2f}\n
-        """
-        return pn.panel(s)
+    def panel_param(self, parameters: [str], widgets: Dict):
+        """Returns a customised panel.Param object linked to this instance"""
 
-    def panel_param(self, panel_param_includes: typing.List | None = None, **kwargs: typing.Dict):
-        if panel_param_includes is not None:
-            kwargs['parameters'] = self.panel_param_includes
-        return pn.Param(self, **kwargs)
+
 
 
 '''todo: set up panel_param() method to return suitable param set with annual interest rate 
@@ -95,6 +92,9 @@ class Mortgage(LoanBase):
         }
         super().__init__(**kwargs)
 
+
     @param.depends('principal', 'periodic_rate', 'number_of_periods', on_init=True, watch=True)
     def calculate_dependent_params(self):
         return super().calculate_dependent_params(reference_period_repayment_period_ratio=12)
+
+
