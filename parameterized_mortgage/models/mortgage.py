@@ -32,8 +32,6 @@ class Mortgage(param.Parameterized):
     monthly_repayment = param.Number(constant=True, precedence=-1)
     total_interest = param.Number(constant=True, precedence=-1)
 
-    # mean_interest_per_month = param.Number(constant=True, precedence=-1) # is this useful?
-
     @param.depends("principal", "rate", "term", watch=True, on_init=True)
     def calculate_dependent_parameters(self):
         """Calculate mortgage interest data and set corresponding parameters."""
@@ -46,13 +44,26 @@ class Mortgage(param.Parameterized):
                     reference_period_repayment_period_ratio=12
                 )
 
+    # todo: split these returned data into two methods
     @param.depends("monthly_repayment", "total_interest")
-    def live_interest_df(self):
+    def live_df(self):
         """Returns a DataFrame containing interest data, updated as figures change."""
         index = ["Monthly repayment", "Total interest payable"]
         values = [self.monthly_repayment, self.total_interest]
         df = pd.DataFrame(values, index=index, columns=["Value"])
         return df
+
+    @param.depends("calculate_dependent_parameters")
+    def repayment_schedule(self) -> pd.DataFrame:
+        pass
+
+    @param.depends("calculate_dependent_parameters")
+    def annual_summary(self) -> pd.DataFrame:
+        pass
+
+    @param.depends("calculate_dependent_parameters")
+    def lifetime_summary(self):
+        pass
 
     def custom_widgets(self):
         """Returns dictionary detailing customised widgets for a panel.Param object."""
@@ -75,4 +86,13 @@ class Mortgage(param.Parameterized):
                 "step": 1
             }
         }
+
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        pass
+
+    def __pprint__(self):
+        pass
 

@@ -16,8 +16,5 @@ def test_loan_periodic_repayment():
 def test_loan_total_interest():
     assert round(loan.total_interest, 2) == total_interest
 
-# removed this parameter for now:
-"""
-def test_loan_mean_interest():
-    assert round(loan.mean_interest_per_payment_period, 2) == mean_interest
-"""
+def test_repayment_schedule():
+    assert
