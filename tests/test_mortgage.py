@@ -1,17 +1,12 @@
 from parameterized_mortgage import Mortgage
+from tests.dummy_data import *
 
-value = 100000
-rate = 8
-term = 30
-repayment = 733.76
-total_interest = 164155.25
-mean_interest = round(total_interest / term / 12, 2)
 
 loan = Mortgage(principal=value, rate=rate, term=term)
 
 
 def test_loan_periodic_repayment():
-    assert round(loan.monthly_repayment, 2) == repayment
+    assert round(loan.monthly_payment, 2) == repayment
 
 def test_loan_total_interest():
     assert round(loan.total_interest, 2) == total_interest

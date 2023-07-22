@@ -1,8 +1,9 @@
 import param
 import panel as pn
 import pandas as pd
+import hvplot.pandas
 
-from parameterized_mortgage.calcs import loan_repayment_metrics
+import parameterized_mortgage.calculate as calculate
 
 pn.extension('tabulator')
 
@@ -29,33 +30,27 @@ class Mortgage(param.Parameterized):
     )
 
     # calculated properties
-    monthly_repayment = param.Number(constant=True, precedence=-1)
-    total_interest = param.Number(constant=True, precedence=-1)
+    monthly_payment = param.Number(constant=True, precedence=-1)
 
     @param.depends("principal", "rate", "term", watch=True, on_init=True)
     def calculate_dependent_parameters(self):
         """Calculate mortgage interest data and set corresponding parameters."""
         with param.edit_constant(self):
-            self.monthly_repayment, self.total_interest, _ = \
-                loan_repayment_metrics(
-                    principal=self.principal,
-                    periodic_rate=self.rate,
-                    number_of_periods=self.term,
-                    reference_period_repayment_period_ratio=12
-                )
+            self.monthly_payment = calculate.monthly_payment(principal=self.principal, rate=self.rate, term=self.term)
 
     # todo: split these returned data into two methods
-    @param.depends("monthly_repayment", "total_interest")
+    @param.depends("monthly_payment")
     def live_df(self):
         """Returns a DataFrame containing interest data, updated as figures change."""
-        index = ["Monthly repayment", "Total interest payable"]
-        values = [self.monthly_repayment, self.total_interest]
+        index = ["Monthly repayment"]
+        values = [self.monthly_payment]
         df = pd.DataFrame(values, index=index, columns=["Value"])
         return df
 
     @param.depends("calculate_dependent_parameters")
     def repayment_schedule(self) -> pd.DataFrame:
-        pass
+        df = calculate.repayment_schedule(principal=self.principal, rate=self.rate, term=self.term)
+        return df
 
     @param.depends("calculate_dependent_parameters")
     def annual_summary(self) -> pd.DataFrame:
@@ -95,4 +90,27 @@ class Mortgage(param.Parameterized):
 
     def __pprint__(self):
         pass
+
+#got here....
+
+    @param.depends("repayment_schedule")
+    def amortization_chart(self):
+        fig = self.repayment_schedule()["balance"].hvplot()
+        return pn.panel(fig)
+
+
+    @param.depends("repayment_schedule")
+    def interest_capital_stacked_bar(self):
+        layout = self.repayment_schedule().hvplot.area(
+            stacked=True,
+            legend="top",
+            y=["interest", "capital repayment"],
+            opts={
+                "line_width": 0
+            }
+        )
+        fig = layout.opts(
+            title="Interest and Capital Repayments",
+        )
+        return pn.panel(fig)
 
