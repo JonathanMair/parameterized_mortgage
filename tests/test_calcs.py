@@ -4,10 +4,9 @@ from tests.dummy_data import *
 
 import pandas as pd
 from pathlib import Path
-from decimal import Decimal
 
 def test_monthly_repayment():
-    result = calcs.monthly_payment(principal=value, rate=rate, term=term)
+    result = calcs.get_monthly_payment(principal=value, rate=rate, term=term)
     assert round(result) == repayment
 
 def test_repayment_schedule():

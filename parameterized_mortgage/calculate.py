@@ -3,8 +3,10 @@
 import pandas as pd
 import param
 
+import parameterized_mortgage.calculate
 
-class monthly_payment(param.ParameterizedFunction):
+
+class get_monthly_payment(param.ParameterizedFunction):
     """Returns monthly repayment amount for given mortgage."""
     principal = param.Number(0, doc="Loan principal at outset.", bounds=(0, None))
     rate = param.Number(0, doc="Annual interest rate espressed as a %.", bounds=(0, None))
@@ -19,6 +21,28 @@ class monthly_payment(param.ParameterizedFunction):
             if monthly_interest != 0 and p.principal != 0 else 0.0
         return repayment_amount
 
+class get_mortgage_stats(param.ParameterizedFunction):
+    """Return dictionary of repayment stats for given mortgage."""
+    principal = param.Number(0, doc="Loan principal at outset.", bounds=(0, None))
+    rate = param.Number(0, doc="Annual interest rate espressed as a %.", bounds=(0, None))
+    term = param.Number(1, doc="Mortgage term in years", bounds=(1, None))
+
+    def __call__(self, **params):
+        p = param.ParamOverrides(self, params)
+        repayment_amount = get_monthly_payment(
+            principal=p.principal,
+            rate=p.rate,
+            term=p.term
+        )
+        total_cost = 12 * p.term * repayment_amount
+        total_interest = total_cost - p.principal
+        return {
+            "Repayment amount": repayment_amount,
+            "Total cost": total_cost,
+            "Total interest": total_interest
+        }
+
+
 class repayment_schedule(param.ParameterizedFunction):
     """Return a DataFrame of a repayment for mortgage of given characteristics."""
     principal = param.Number(doc="Loan principal at outset.", bounds=(0, None), allow_None=False)
@@ -29,7 +53,7 @@ class repayment_schedule(param.ParameterizedFunction):
         p = param.ParamOverrides(self, params)
 
         # get monthly repayment amount
-        monthly_payment_amount = monthly_payment(
+        monthly_payment_amount = get_monthly_payment(
             principal=p.principal,
             rate=p.rate,
             term=p.term
