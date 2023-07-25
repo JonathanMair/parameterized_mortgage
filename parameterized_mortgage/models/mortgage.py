@@ -2,10 +2,11 @@ import param
 import panel as pn
 import pandas as pd
 import hvplot.pandas
+pd.options.display.float_format = '{:,.2f}'.format
 
 import parameterized_mortgage.calculate as calculate
 
-pn.extension('tabulator')
+pn.extension('tabulator', )
 
 
 class Mortgage(param.Parameterized):
@@ -69,7 +70,7 @@ class Mortgage(param.Parameterized):
                 "step": 1000
             },
             "rate": {
-                "type": pn.widgets.FloatSlider,
+                "type": pn.widgets.FloatInput,
                 "start": 0,
                 "end": 10,
                 "step": 0.01,
@@ -78,7 +79,8 @@ class Mortgage(param.Parameterized):
                 "type": pn.widgets.IntSlider,
                 "start": 0,
                 "end": 40,
-                "step": 1
+                "step": 1,
+                "name": "term in years"
             }
         }
 
@@ -115,5 +117,5 @@ class Mortgage(param.Parameterized):
     @param.depends("calculate_dependent_parameters")
     def mortgage_stats_table(self):
         stats = calculate.get_mortgage_stats(principal=self.principal, rate=self.rate, term=self.term)
-        df = pd.DataFrame(stats.values(), index=stats.keys())
+        df = pd.DataFrame(stats.values(), index=stats.keys()).round(2)
         return df

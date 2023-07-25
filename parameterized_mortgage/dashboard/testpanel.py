@@ -4,6 +4,7 @@ from pathlib import Path
 
 import parameterized_mortgage
 
+pn.extension()
 
 path = Path(__file__).with_name("piso_rentable.png")
 with open(path, "rb") as f:
@@ -11,7 +12,7 @@ with open(path, "rb") as f:
 
 pn.config.throttled = True
 pn.config.design = Material
-
+pn.config.sizing_mode = "stretch_width"
 
 loan = parameterized_mortgage.Mortgage(principal=67000, rate=3.4, term=30)
 
@@ -26,7 +27,10 @@ template = pn.template.MaterialTemplate(
     logo="./piso_rentable.png",
     sidebar=pn.Param(
         loan,
-        widgets=loan.custom_widgets()
+        widgets=loan.custom_widgets(),
+        name="Mortgage settings",
+        margin=50,
+        defualt_layout=pn.Column
     ),
     main=[
         stats_row,

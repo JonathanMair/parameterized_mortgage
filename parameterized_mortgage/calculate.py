@@ -116,3 +116,26 @@ class lifetime_summary(param.ParameterizedFunction):
         lifetime = p.annual_summary[["payment", "interest", "capital repayment"]].sum()
         return lifetime
 
+
+def currency_formatter():
+    """Return a function that formats a number as a currency string."""
+    def formatter(*nums):
+        result = [f"{float(n):.2f}" for n in nums]
+        return result
+
+    return formatter
+
+"""
+class currency_formatter(param.ParameterizedFunction):
+    """
+"""Return a function that formats a number as a currency string.
+    # todo: implement localization
+
+    def formatter(*nums):
+        result = [f"{float(n):.2f}" for n in nums]
+        return result
+
+    def __call__(self, *args, **params):
+        p = param.ParamOverrides(self, params)
+        return self.formatter(*args)
+"""
