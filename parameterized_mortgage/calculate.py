@@ -1,10 +1,6 @@
 """Module provides parameterized functions for calculating data for mortgages."""
-
 import pandas as pd
 import param
-
-import parameterized_mortgage.calculate
-
 
 class get_monthly_payment(param.ParameterizedFunction):
     """Returns monthly repayment amount for given mortgage."""

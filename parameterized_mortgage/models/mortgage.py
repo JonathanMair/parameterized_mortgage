@@ -2,11 +2,12 @@ import param
 import panel as pn
 import pandas as pd
 import hvplot.pandas
+hvplot.extension('bokeh')
 pd.options.display.float_format = '{:,.2f}'.format
 
 import parameterized_mortgage.calculate as calculate
 
-pn.extension('tabulator', )
+pn.extension('tabulator')
 
 
 class Mortgage(param.Parameterized):
@@ -38,15 +39,6 @@ class Mortgage(param.Parameterized):
         """Calculate mortgage interest data and set corresponding parameters."""
         with param.edit_constant(self):
             self.monthly_payment = calculate.get_monthly_payment(principal=self.principal, rate=self.rate, term=self.term)
-
-    # todo: split these returned data into two methods
-    @param.depends("get_monthly_payment")
-    def live_df(self):
-        """Returns a DataFrame containing interest data, updated as figures change."""
-        index = ["Monthly repayment"]
-        values = [self.monthly_payment]
-        df = pd.DataFrame(values, index=index, columns=["Value"])
-        return df
 
     @param.depends("calculate_dependent_parameters")
     def repayment_schedule(self) -> pd.DataFrame:
@@ -115,7 +107,7 @@ class Mortgage(param.Parameterized):
         return pn.panel(fig, sizing_mode="stretch_width")
 
     @param.depends("calculate_dependent_parameters")
-    def mortgage_stats_table(self):
+    def key_stats(self):
         stats = calculate.get_mortgage_stats(principal=self.principal, rate=self.rate, term=self.term)
         df = pd.DataFrame(stats.values(), index=stats.keys()).round(2)
         return df
