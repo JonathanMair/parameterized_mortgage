@@ -76,38 +76,29 @@ class Mortgage(param.Parameterized):
             }
         }
 
-    def __repr__(self):
-        pass
-
-    def __str__(self):
-        pass
-
-    def __pprint__(self):
-        pass
-
-#got here....
-
     @param.depends("repayment_schedule")
     def amortization_chart(self):
-        fig = self.repayment_schedule()["balance"].hvplot()
+        fig = self.repayment_schedule()["balance"].hvplot(
+            kind="line",
+            y=["balance"],
+            title="",
+            height=360
+        ).opts(toolbar=None)
         return pn.panel(fig, sizing_mode="stretch_width")
-
 
     @param.depends("repayment_schedule")
     def chart_interest_vs_capital(self):
         layout = self.repayment_schedule().hvplot(
             kind="area",
             stacked=True,
-            legend="top",
+            legend="top_right",
             y=["interest", "capital repayment"],
-        )
-        fig = layout.opts(
-            title="Interest and Capital Repayments",
-        )
-        return pn.panel(fig, sizing_mode="stretch_width")
+            height= 360,
+        ).opts(toolbar=None)
+        return pn.panel(layout, sizing_mode="stretch_width")
 
     @param.depends("calculate_dependent_parameters")
     def key_stats(self):
         stats = calculate.get_mortgage_stats(principal=self.principal, rate=self.rate, term=self.term)
-        df = pd.DataFrame(stats.values(), index=stats.keys()).round(2)
+        df = pd.DataFrame(stats.values(), index=stats.keys(), columns=["value"])
         return df
