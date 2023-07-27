@@ -16,6 +16,7 @@ tabulator_settings = {
     "text_align": "right"
 }
 
+
 class PCard(pn.Card):
 
     def __init__(self, *objs, **params):
@@ -29,43 +30,47 @@ class PCard(pn.Card):
 class Settings(pn.Param):
 
     def __init__(self, **params):
-        params["widgets"] = params["object"].custom_widgets()
-        super().__init__(**params)
+        params["widgets"] = params["mortgage"].custom_widgets()
+        super().__init__(object=params["mortgage"], **params)
         self.collapsible = False
         self.name = ""
-        # self.sizing_mode = "stretch_both"
 
 
 class SettingsCard(PCard):
 
-    def __init__(self, *objs, **params):
+    def __init__(self, **params):
         card_params = {key: value for key, value in params.items() if key != "mortgage"}
-        card_params["title"] = "Mortgage Settings"
-        super().__init__(*objs, **card_params)
-        obj = [Settings(object=params["mortgage"])]
-        self.objects = obj
+        obj = Settings(mortgage=params["mortgage"])
+        self.title = "Mortgage Settings"
+        super().__init__(obj, **card_params)
+
 
 class ScheduleCard(PCard):
 
+    '''
     schedule_type = param.Selector(
-        "lifetime summary",
-        options=["full", "annual summary", "lifetime summary"],
-        doc="Defines kind of schedule to show: full, annual summary or lifetime summary."
+        default="lifetime summary",
+        objects=["full", "annual summary", "lifetime summary"],
+        doc="Defines kind of schedule to show: full, annual summary or lifetime summary.",
+        check_on_set=True
     )
+    '''
 
     def __init__(self, *objs, **params):
         # remove extra params before calling super()
-        card_params = {key: value for key, value in params.items() if key != "mortgage" and key != "schedule_type"}
+        card_params = {key: value for key, value in params.items() if key != "mortgage"}
         super().__init__(*objs, **card_params)
         tabulator = pn.widgets.Tabulator(
             params["mortgage"].repayment_schedule,
             **tabulator_settings
         )
-        selector = self.param.schedule_type
+        # selector = self.param.schedule_type
         self.title = "Repayment schedule"
-        self.objects = [selector, tabulator]
+        self.objects = [
+            # selector,
+            tabulator
+        ]
         self.collapsible = True
         self.collapsed = False
         self.height = 540
         self.height_policy = "min"
-

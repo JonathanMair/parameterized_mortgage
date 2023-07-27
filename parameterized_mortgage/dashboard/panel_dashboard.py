@@ -13,7 +13,7 @@ path = Path(__file__).with_name("parameterized_mortgage.png")
 with open(path, "rb") as f:
     logo = f.read()
 
-pn.config.throttled = True
+pn.config.throttled = False
 pn.config.design = Material
 pn.config.sizing_mode = "stretch_width"
 
@@ -50,7 +50,7 @@ template = pn.template.BootstrapTemplate(
             pn.Column(
                 settings,
                 key_stats,
-                width=360
+                width=320
             ),
             pn.Column(
                 pn.Row(
