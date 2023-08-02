@@ -7,18 +7,13 @@ formatters = {
     "interest": NumberFormatter(format="0,0", text_align="right"),
     "capital repayment": NumberFormatter(format="0,0", text_align="right"),
     "balance": NumberFormatter(format="0,0", text_align="right"),
-    "value":  NumberFormatter(format="0,0", text_align="right")
+    "value": NumberFormatter(format="0,0", text_align="right"),
 }
 
-tabulator_settings = {
-    "disabled": True,
-    "formatters": formatters,
-    "text_align": "right"
-}
+tabulator_settings = {"disabled": True, "formatters": formatters, "text_align": "right"}
 
 
 class PCard(pn.Card):
-
     def __init__(self, *objs, **params):
         super().__init__(*objs, **params)
         self.collapsible = False
@@ -28,7 +23,6 @@ class PCard(pn.Card):
 
 
 class Settings(pn.Param):
-
     def __init__(self, **params):
         params["widgets"] = params["mortgage"].custom_widgets()
         super().__init__(object=params["mortgage"], **params)
@@ -37,39 +31,26 @@ class Settings(pn.Param):
 
 
 class SettingsCard(PCard):
-
     def __init__(self, **params):
         card_params = {key: value for key, value in params.items() if key != "mortgage"}
-        obj = Settings(mortgage=params["mortgage"])
+        repayment_indicator = pn.panel(params["mortgage"].get_monthly_payment)
+        settings = Settings(mortgage=params["mortgage"])
+        objs = [settings, repayment_indicator]
         self.title = "Mortgage Settings"
-        super().__init__(obj, **card_params)
+        super().__init__(*objs, **card_params)
 
 
 class ScheduleCard(PCard):
-
-    '''
-    schedule_type = param.Selector(
-        default="lifetime summary",
-        objects=["full", "annual summary", "lifetime summary"],
-        doc="Defines kind of schedule to show: full, annual summary or lifetime summary.",
-        check_on_set=True
-    )
-    '''
-
     def __init__(self, *objs, **params):
         # remove extra params before calling super()
         card_params = {key: value for key, value in params.items() if key != "mortgage"}
+        print(card_params)
         super().__init__(*objs, **card_params)
         tabulator = pn.widgets.Tabulator(
-            params["mortgage"].repayment_schedule,
-            **tabulator_settings
+            params["mortgage"].lifetime_summary, **tabulator_settings
         )
-        # selector = self.param.schedule_type
         self.title = "Repayment schedule"
-        self.objects = [
-            # selector,
-            tabulator
-        ]
+        self.objects = [tabulator]
         self.collapsible = True
         self.collapsed = False
         self.height = 540

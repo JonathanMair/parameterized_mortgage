@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{include = "parameterized_mortgage"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 pandas = "^2.0.3"
 param = "^1.13.0"
 panel = "^1.2.0"
@@ -20,6 +20,8 @@ pytest = "^7.4.0"
 jupyter = "1.0.0"
 notebook = "6.5.4"
 plotly = "^5.15.0"
+sphinx = "^7.1.1"
+black = "^23.7.0"
 
 [build-system]
 requires = ["poetry-core"]
