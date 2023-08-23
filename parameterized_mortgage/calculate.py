@@ -15,7 +15,7 @@ class get_monthly_payment(param.ParameterizedFunction):
     def __call__(self, **params):
         p = param.ParamOverrides(self, params)
         monthly_interest = (
-            p.rate / 1200
+                p.rate / 1200
         )  # convert annual % rate to decimal and spread over 12 months
         number_of_periods = p.term * 12  # 12 repayments per year
         compound = (1 + monthly_interest) ** number_of_periods
@@ -51,7 +51,7 @@ class get_mortgage_stats(param.ParameterizedFunction):
 
 
 class repayment_schedule(param.ParameterizedFunction):
-    """Return a DataFrame of a repayment for mortgage of given characteristics."""
+    """Return a repayment/amortization schedule as a DataFrame, for mortgage of given characteristics."""
 
     principal = param.Number(
         doc="Loan principal at outset.", bounds=(0, None), allow_None=False
@@ -90,6 +90,9 @@ class repayment_schedule(param.ParameterizedFunction):
             capital_repayment = monthly_payment_amount - interest_due
             capital_repayments.append(capital_repayment)
             balance -= capital_repayment
+            # because floating point error leads to final result of -0.00:
+            if balance < 0:
+                balance = 0
             balances.append(balance)
 
         # construct df
@@ -133,7 +136,7 @@ class annual_summary(param.ParameterizedFunction):
 
 
 class lifetime_summary(param.ParameterizedFunction):
-    """Return a lifetime summary as a pd.DataFrame."""
+    """Return a lifetime summary as a pandas DataFrame."""
 
     annual_summary = param.DataFrame(
         doc="DataFrame in the format returned by calcs.annual_summary()"

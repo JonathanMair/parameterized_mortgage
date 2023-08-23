@@ -6,4 +6,6 @@ jupyter
 jupyter/
 jupyter/*
 
+*.pyc
+
 .DS_Store
