@@ -19,7 +19,7 @@ pn.config.sizing_mode = "stretch_width"
 loan = parameterized_mortgage.Mortgage(principal=67000, rate=3.4, term=30)
 settings = cp.SettingsCard(mortgage=loan)
 key_stats = cp.PCard(
-    pn.widgets.Tabulator(loan.key_stats, **cp.tabulator_settings), title="Key stats"
+    pn.widgets.Tabulator(loan.lifetime_summary, **cp.tabulator_settings), title="Lifetime summary"
 )
 interest_vs_capital = cp.PCard(
     loan.chart_interest_vs_capital, title="Interest vs capital repayments"

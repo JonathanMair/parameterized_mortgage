@@ -1,3 +1,5 @@
+"""Module provides panel components for use in a dashboard"""
+
 import panel as pn
 import param
 from bokeh.models import NumberFormatter
