@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2571e129-48ff-4a41-b089-7278e477d7ac" name="Changes" comment="" />
+    <list default="true" id="2571e129-48ff-4a41-b089-7278e477d7ac" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/parameterized_mortgage/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameterized_mortgage/dashboard/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/parameterized_mortgage/dashboard/components.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameterized_mortgage/dashboard/panel_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/parameterized_mortgage/dashboard/panel_dashboard.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -184,7 +189,7 @@
       <workItem from="1690957178445" duration="2823000" />
       <workItem from="1691067007240" duration="598000" />
       <workItem from="1691240495531" duration="1898000" />
-      <workItem from="1692732798269" duration="8792000" />
+      <workItem from="1692732798269" duration="12517000" />
     </task>
     <servers />
   </component>

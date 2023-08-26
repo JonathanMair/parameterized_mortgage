@@ -25,31 +25,29 @@ class PCard(pn.Card):
 
 
 class Settings(pn.Param):
-    def __init__(self, **params):
-        params["widgets"] = params["mortgage"].custom_widgets()
-        super().__init__(object=params["mortgage"], **params)
+    def __init__(self, mortgage, **params):
+        params["widgets"] = mortgage.custom_widgets()
+        super().__init__(object=mortgage, **params)
         self.collapsible = False
         self.name = ""
 
 
 class SettingsCard(PCard):
-    def __init__(self, **params):
-        card_params = {key: value for key, value in params.items() if key != "mortgage"}
-        repayment_indicator = pn.panel(params["mortgage"].get_monthly_payment)
-        settings = Settings(mortgage=params["mortgage"])
+
+    def __init__(self, mortgage, **params):
+        repayment_indicator = pn.panel(mortgage.get_monthly_payment)
+        settings = Settings(mortgage=mortgage)
         objs = [settings, repayment_indicator]
         self.title = "Mortgage Settings"
-        super().__init__(*objs, **card_params)
+        super().__init__(*objs, **params)
 
 
 class ScheduleCard(PCard):
-    def __init__(self, *objs, **params):
+    def __init__(self, mortgage, *objs, **params):
         # remove extra params before calling super()
-        card_params = {key: value for key, value in params.items() if key != "mortgage"}
-        print(card_params)
-        super().__init__(*objs, **card_params)
+        super().__init__(*objs, **params)
         tabulator = pn.widgets.Tabulator(
-            params["mortgage"].lifetime_summary, **tabulator_settings
+            mortgage.lifetime_summary, **tabulator_settings
         )
         self.title = "Repayment schedule"
         self.objects = [tabulator]
