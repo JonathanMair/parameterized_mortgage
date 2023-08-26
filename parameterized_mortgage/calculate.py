@@ -15,7 +15,7 @@ class get_monthly_payment(param.ParameterizedFunction):
     def __call__(self, **params):
         p = param.ParamOverrides(self, params)
         monthly_interest = (
-                p.rate / 1200
+            p.rate / 1200
         )  # convert annual % rate to decimal and spread over 12 months
         number_of_periods = p.term * 12  # 12 repayments per year
         compound = (1 + monthly_interest) ** number_of_periods

@@ -33,7 +33,6 @@ class Settings(pn.Param):
 
 
 class SettingsCard(PCard):
-
     def __init__(self, mortgage, **params):
         repayment_indicator = pn.panel(mortgage.get_monthly_payment)
         settings = Settings(mortgage=mortgage)
