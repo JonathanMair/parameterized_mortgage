@@ -1,6 +1,5 @@
 import panel as pn
 from panel.theme import Material
-from pathlib import Path
 
 import parameterized_mortgage
 import parameterized_mortgage.dashboard.components as cp
@@ -8,9 +7,6 @@ import parameterized_mortgage.dashboard.components as cp
 def get_dashboard_demo():
     """Returns panel template object with demo of the Mortgage class"""
     pn.extension("tabulator")
-    path = Path(__file__).with_name("parameterized_mortgage.png")
-    with open(path, "rb") as f:
-        logo = f.read()
     pn.config.throttled = False
     pn.config.design = Material
     pn.config.sizing_mode = "stretch_width"
@@ -29,7 +25,6 @@ def get_dashboard_demo():
 
     template = pn.template.BootstrapTemplate(
         title="Mortgage Calculator  ",
-        logo="./parameterized_mortgage.png",
         main=[
             pn.Row(
                 pn.Column(settings, key_stats, width=320),
