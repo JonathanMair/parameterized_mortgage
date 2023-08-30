@@ -23,6 +23,14 @@ class PCard(pn.Card):
         self.height_policy = "fixed"
         self.height = 450
 
+class MonthlyRepaymentCard(pn.Card):
+    def __init__(self, *objs, **params):
+        super().__init__(*objs, **params)
+        self.collapsible = False
+        self.objects.append(pn.VSpacer())
+        self.height_policy = "fixed"
+        self.height = 90
+
 
 class Settings(pn.Param):
     def __init__(self, mortgage, **params):
@@ -42,15 +50,24 @@ class SettingsCard(PCard):
 
 
 class ScheduleCard(PCard):
-    def __init__(self, mortgage, *objs, **params):
-        # remove extra params before calling super()
-        super().__init__(*objs, **params)
+
+
+    def __init__(self, mortgage, summary_type="monthly", **params):
+        """Argument summary_type determines whether the table returned is a full amortization table (default), or
+        an annual summary (summary_type=\"annual_summary\"), or a lifetime summary (summary_type=\"lifetime_summary\".
+        """
+        super().__init__(**params)
+        function_ = mortgage.lifetime_summary
+        if summary_type == "monthly":
+            function_ = mortgage.repayment_schedule
+        elif summary_type == "annual summary":
+            function_ = mortgage.annual_summary
         tabulator = pn.widgets.Tabulator(
-            mortgage.lifetime_summary, **tabulator_settings
+            function_, **tabulator_settings
         )
-        self.title = "Repayment schedule"
+        self.title = f"Repayment schedule: {summary_type}"
         self.objects = [tabulator]
-        self.collapsible = True
+        self.collapsible = False
         self.collapsed = False
         self.height = 540
         self.height_policy = "min"
