@@ -5,6 +5,10 @@ A package to provide an easily vizualizable mortgage class, built on the Holoviz
 
 ## Installation 
 
+Install the package using pip:
+
+`pip install parameterized_mortgage`
+
 Import the Mortgage class:
 
 `from parameterized_mortgage import Mortgage`
@@ -13,7 +17,16 @@ Import the Mortgage class:
 
 The package includes a demo dashboard application to show how the Mortgage class can be embedded in visualizations using holoviz panel. See the code in `parameterized_mortgage.dashboard` to see how this is achieved. 
 
-To run the demo, install the package 
+To run the demo on your own machine, install the package using [pipx](https://pypa.github.io/pipx/installation/) (install pipx if necessary):
+
+`pipx install git+https://github.com/JonathanMair/parameterized_mortgage.git`
+
+The run the following command:
+
+`dashboard`
+
+The panel app will launch and should open automatically in a browser. It will look like this:
+
 
 ![](https://raw.githubusercontent.com/JonathanMair/parameterized_mortgage/main/parameterized_mortgage_demo.png)
 
@@ -73,5 +86,7 @@ This software makes calculations that could be relevant to investment decisions,
 
 ## Change log
 
+- 0.1.5: updated README.md
+- 0.1.4: added script entrypoint
 - 0.1.3: moved __main__.py with demo cli to module `dashboard`
 - 0.1.2: fixed error in param.depends declarations in Mortgage

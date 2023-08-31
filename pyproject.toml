@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "parameterized_mortgage"
-version = "0.1.2"
+version = "0.1.5"
 description = "A simple python package to provide mortgage repayment calculations using the French method of amortization"
 authors = ["Jonathan Mair <jonathan.mair@gmail.com>"]
 license = "GNU V3"
