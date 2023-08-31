@@ -24,7 +24,7 @@ class Mortgage(param.Parameterized):
     monthly_payment = param.Number(constant=True, precedence=-1)
 
     @param.depends("principal", "rate", "term", watch=True, on_init=True)
-    def calculate_dependent_parameters(self):
+    def _calculate_dependent_parameters(self):
         """Calculate mortgage interest data and set corresponding parameters."""
         with param.edit_constant(self):
             self.monthly_payment = calculate.get_monthly_payment(
@@ -80,7 +80,6 @@ class Mortgage(param.Parameterized):
                 height=360,
                 width=600,
                 legend=False,
-                config={"displayModeBar:None"}
             )
         )
         return pn.panel(fig, sizing_mode="stretch_width")
@@ -92,23 +91,14 @@ class Mortgage(param.Parameterized):
             .hvplot(
                 kind="area",
                 stacked=False,
-                alpha=0.5,
                 legend=False,
                 y=["interest", "capital repayment"],
                 height=360,
                 width=600,
-                config={"displayModeBar:None"}
             )
         )
         return pn.panel(layout, sizing_mode="stretch_width")
 
-    @param.depends("calculate_dependent_parameters")
-    def key_stats(self):
-        stats = calculate.get_mortgage_stats(
-            principal=self.principal, rate=self.rate, term=self.term
-        )
-        df = pd.DataFrame(stats.values(), index=stats.keys(), columns=["value"])
-        return df
 
     @param.depends("calculate_dependent_parameters")
     def get_monthly_payment(self):

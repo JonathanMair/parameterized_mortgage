@@ -1,5 +1,5 @@
 """Module provides panel components for use in a dashboard"""
-
+import pandas as pd
 import panel as pn
 import param
 from bokeh.models import NumberFormatter
@@ -12,7 +12,9 @@ formatters = {
     "value": NumberFormatter(format="0,0", text_align="right"),
 }
 
-tabulator_settings = {"disabled": True, "formatters": formatters, "text_align": "right"}
+tabulator_settings = {
+    "disabled": True, "formatters": formatters, "text_align": "right",  "height": 600
+}
 
 
 class PCard(pn.Card):
@@ -21,15 +23,12 @@ class PCard(pn.Card):
         self.collapsible = False
         self.objects.append(pn.VSpacer())
         self.height_policy = "fixed"
-        self.height = 450
 
 class MonthlyRepaymentCard(pn.Card):
     def __init__(self, *objs, **params):
         super().__init__(*objs, **params)
         self.collapsible = False
         self.objects.append(pn.VSpacer())
-        self.height_policy = "fixed"
-        self.height = 90
 
 
 class Settings(pn.Param):
@@ -46,10 +45,11 @@ class SettingsCard(PCard):
         objs = [settings]
         self.title = "Mortgage Settings"
         super().__init__(*objs, **params)
-        self.height_policy="auto"
 
 
-class ScheduleCard(PCard):
+
+
+class ScheduleRow(pn.Row):
 
 
     def __init__(self, mortgage, summary_type="monthly", **params):
@@ -67,7 +67,3 @@ class ScheduleCard(PCard):
         )
         self.title = f"Repayment schedule: {summary_type}"
         self.objects = [tabulator]
-        self.collapsible = False
-        self.collapsed = False
-        self.height = 540
-        self.height_policy = "min"

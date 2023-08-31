@@ -17,33 +17,29 @@ def get_dashboard_demo():
         loan.chart_interest_vs_capital, title="Interest vs capital repayments"
     )
     balance_over_time = cp.PCard(loan.amortization_chart, title="Balance of loan")
-    schedule = cp.ScheduleCard(mortgage=loan)
-    annual_summary = cp.ScheduleCard(mortgage=loan, summary_type="annual summary")
-    lifetime_summary = cp.ScheduleCard(mortgage=loan, summary_type="lifetime summary")
+    summary_types = ["monthly", "annual summary", "lifetime summary"]
+    tab_objects = []
+    for s in summary_types:
+        tabulator = cp.ScheduleRow(mortgage=loan, summary_type=s)
+        tab_objects.append((s, tabulator))
     charts_row = pn.Row(interest_vs_capital, balance_over_time)
-
+    schedule_tabs = pn.Tabs(objects=tab_objects)
+    schedule_card = cp.PCard(schedule_tabs, title="Repayment schedule")
+    schedule_card.height_policy="fit"
     monthly_payment_card = cp.MonthlyRepaymentCard(
         pn.panel(loan.get_monthly_payment),
         title="Monthly repayment"
     )
 
     template = pn.template.BootstrapTemplate(
-        title="Mortgage Calculator  ",
+        title="parameterized_mortgage",
         sidebar=[],
         main=[
             pn.Row(
                 pn.Column(
-                    pn.Row(settings),
-                    pn.Row(monthly_payment_card),
+                    pn.Row(settings, monthly_payment_card),
                     pn.Row(charts_row),
-                    pn.Row(
-                        pn.Tabs(
-                            ("Repayment schedule: monthly", schedule),
-                            ("Repayment schedule: annual summary", annual_summary),
-                            ("Repayment schedule: lifetime summary", lifetime_summary),
-
-                        )
-                    ),
+                    pn.Row(schedule_card)
                 ),
             )
         ],
