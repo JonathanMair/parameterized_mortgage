@@ -13,6 +13,8 @@ pandas = "^2.0.3"
 param = "^1.13.0"
 panel = "^1.2.0"
 hvplot = "^0.8.4"
+matplotlib = "^3.7.2"
+plotly = "^5.16.1"
 
 [tool.poetry.group.dev.dependencies]
 131228_pytest_1 = "^1.0.0"

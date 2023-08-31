@@ -42,11 +42,11 @@ class Settings(pn.Param):
 
 class SettingsCard(PCard):
     def __init__(self, mortgage, **params):
-        repayment_indicator = pn.panel(mortgage.get_monthly_payment)
         settings = Settings(mortgage=mortgage)
-        objs = [settings, repayment_indicator]
+        objs = [settings]
         self.title = "Mortgage Settings"
         super().__init__(*objs, **params)
+        self.height_policy="auto"
 
 
 class ScheduleCard(PCard):

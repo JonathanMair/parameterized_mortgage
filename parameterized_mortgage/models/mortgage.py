@@ -5,7 +5,7 @@ import hvplot.pandas
 
 import parameterized_mortgage.calculate as calculate
 
-hvplot.extension("bokeh")
+hvplot.extension("plotly")
 pd.options.display.float_format = "{:,.2f}".format
 pn.extension("tabulator")
 
@@ -73,8 +73,15 @@ class Mortgage(param.Parameterized):
     def amortization_chart(self):
         fig = (
             self.repayment_schedule()["balance"]
-            .hvplot(kind="line", y=["balance"], title="", height=360)
-            .opts(toolbar=None)
+            .hvplot(
+                kind="line",
+                y=["balance"],
+                title="",
+                height=360,
+                width=600,
+                legend=False,
+                config={"displayModeBar:None"}
+            )
         )
         return pn.panel(fig, sizing_mode="stretch_width")
 
@@ -84,12 +91,14 @@ class Mortgage(param.Parameterized):
             self.repayment_schedule()
             .hvplot(
                 kind="area",
-                stacked=True,
-                legend="top_right",
+                stacked=False,
+                alpha=0.5,
+                legend=False,
                 y=["interest", "capital repayment"],
                 height=360,
+                width=600,
+                config={"displayModeBar:None"}
             )
-            .opts(toolbar=None)
         )
         return pn.panel(layout, sizing_mode="stretch_width")
 

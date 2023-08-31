@@ -10,13 +10,9 @@ def get_dashboard_demo():
     pn.extension("tabulator")
     pn.config.throttled = True
     pn.config.design = Material
-    pn.config.sizing_mode = "stretch_width"
+    pn.config.sizing_mode = "stretch_both"
     loan = parameterized_mortgage.Mortgage(principal=250000, rate=5, term=30)
     settings = cp.SettingsCard(mortgage=loan)
-    key_stats = cp.PCard(
-        pn.widgets.Tabulator(loan.lifetime_summary, **cp.tabulator_settings),
-        title="Lifetime summary",
-    )
     interest_vs_capital = cp.PCard(
         loan.chart_interest_vs_capital, title="Interest vs capital repayments"
     )
@@ -24,7 +20,6 @@ def get_dashboard_demo():
     schedule = cp.ScheduleCard(mortgage=loan)
     annual_summary = cp.ScheduleCard(mortgage=loan, summary_type="annual summary")
     lifetime_summary = cp.ScheduleCard(mortgage=loan, summary_type="lifetime summary")
-
     charts_row = pn.Row(interest_vs_capital, balance_over_time)
 
     monthly_payment_card = cp.MonthlyRepaymentCard(
@@ -34,10 +29,11 @@ def get_dashboard_demo():
 
     template = pn.template.BootstrapTemplate(
         title="Mortgage Calculator  ",
-        sidebar=[settings,],
+        sidebar=[],
         main=[
             pn.Row(
                 pn.Column(
+                    pn.Row(settings),
                     pn.Row(monthly_payment_card),
                     pn.Row(charts_row),
                     pn.Row(
