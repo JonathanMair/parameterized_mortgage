@@ -22,7 +22,6 @@ class PCard(pn.Card):
         super().__init__(*objs, **params)
         self.collapsible = False
         self.objects.append(pn.VSpacer())
-        self.height_policy = "fixed"
 
 class MonthlyRepaymentCard(pn.Card):
     def __init__(self, *objs, **params):

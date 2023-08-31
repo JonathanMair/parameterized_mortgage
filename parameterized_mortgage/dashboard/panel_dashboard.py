@@ -10,7 +10,7 @@ def get_dashboard_demo():
     pn.extension("tabulator")
     pn.config.throttled = True
     pn.config.design = Material
-    pn.config.sizing_mode = "stretch_both"
+    pn.config.sizing_mode = "stretch_width"
     loan = parameterized_mortgage.Mortgage(principal=250000, rate=5, term=30)
     settings = cp.SettingsCard(mortgage=loan)
     interest_vs_capital = cp.PCard(
@@ -23,9 +23,8 @@ def get_dashboard_demo():
         tabulator = cp.ScheduleRow(mortgage=loan, summary_type=s)
         tab_objects.append((s, tabulator))
     charts_row = pn.Row(interest_vs_capital, balance_over_time)
-    schedule_tabs = pn.Tabs(objects=tab_objects)
+    schedule_tabs = pn.Tabs(objects=tab_objects, height=800, width=900)
     schedule_card = cp.PCard(schedule_tabs, title="Repayment schedule")
-    schedule_card.height_policy="fit"
     monthly_payment_card = cp.MonthlyRepaymentCard(
         pn.panel(loan.get_monthly_payment),
         title="Monthly repayment"
@@ -37,12 +36,16 @@ def get_dashboard_demo():
         main=[
             pn.Row(
                 pn.Column(
-                    pn.Row(settings, monthly_payment_card),
-                    pn.Row(charts_row),
-                    pn.Row(schedule_card)
+                    pn.Row(settings, monthly_payment_card, height=300),
+                    pn.Row(charts_row, height=450),
+                    pn.Row(schedule_card, pn.HSpacer(), height=900, size_policy="stretch_width")
                 ),
             )
         ],
     )
 
     return template
+
+def demo():
+    template = get_dashboard_demo()
+    pn.serve(template, threaded=True)

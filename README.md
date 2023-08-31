@@ -71,3 +71,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3.
 
 This software makes calculations that could be relevant to investment decisions, but it is provided without warranty. Users' attention is drawn to the relevant paragraphs of the licence.
 
+## Change log
+
+- 0.1.3: moved __main__.py with demo cli to module `dashboard`
+- 0.1.2: fixed error in param.depends declarations in Mortgage

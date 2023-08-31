@@ -31,20 +31,20 @@ class Mortgage(param.Parameterized):
                 principal=self.principal, rate=self.rate, term=self.term
             )
 
-    @param.depends("calculate_dependent_parameters")
+    @param.depends("_calculate_dependent_parameters")
     def repayment_schedule(self) -> pd.DataFrame:
         df = calculate.repayment_schedule(
             principal=self.principal, rate=self.rate, term=self.term
         )
         return df
 
-    @param.depends("calculate_dependent_parameters")
+    @param.depends("_calculate_dependent_parameters")
     def annual_summary(self) -> pd.DataFrame:
         df = self.repayment_schedule()
         annual_summary_df = calculate.annual_summary(repayment_schedule=df)
         return annual_summary_df
 
-    @param.depends("calculate_dependent_parameters")
+    @param.depends("_calculate_dependent_parameters")
     def lifetime_summary(self):
         df = self.annual_summary()
         lifetime_summary_df = calculate.lifetime_summary(annual_summary=df)
@@ -100,6 +100,6 @@ class Mortgage(param.Parameterized):
         return pn.panel(layout, sizing_mode="stretch_width")
 
 
-    @param.depends("calculate_dependent_parameters")
+    @param.depends("_calculate_dependent_parameters")
     def get_monthly_payment(self):
         return f"{self.monthly_payment:,.0f}"
