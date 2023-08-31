@@ -5,64 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2571e129-48ff-4a41-b089-7278e477d7ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/parameterized_mortgage_demo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/modules.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/parameterized_mortgage.dashboard.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/parameterized_mortgage.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/parameterized_mortgage.models.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/tests.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/parameterized_mortgage/calculate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/parameterized_mortgage/dashboard/components.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/parameterized_mortgage/models/mortgage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/tests/test_calcs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/tests/test_mortgage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/index.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/modules.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/parameterized_mortgage.dashboard.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/parameterized_mortgage.models.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/parameterized_mortgage.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/tests.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/alabaster.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/basic.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/custom.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/documentation_options.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/file.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/language_data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/minus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/plus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/pygments.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/sphinx_highlight.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/modules.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/parameterized_mortgage.dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/parameterized_mortgage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/parameterized_mortgage.models.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/search.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/tests.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/conf.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/make.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/modules.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/parameterized_mortgage.dashboard.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/parameterized_mortgage.models.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/parameterized_mortgage.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tests.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameterized_mortgage/dashboard/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/parameterized_mortgage/dashboard/components.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameterized_mortgage/dashboard/panel_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/parameterized_mortgage/dashboard/panel_dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameterized_mortgage/models/mortgage.py" beforeDir="false" afterPath="$PROJECT_DIR$/parameterized_mortgage/models/mortgage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/parameterized_mortgage-0.1.0-py3-none-any.whl" beforeDir="false" afterPath="$PROJECT_DIR$/dist/parameterized_mortgage-0.1.0-py3-none-any.whl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/parameterized_mortgage-0.1.0.tar.gz" beforeDir="false" afterPath="$PROJECT_DIR$/dist/parameterized_mortgage-0.1.0.tar.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +194,7 @@
       <workItem from="1691240495531" duration="1898000" />
       <workItem from="1692732798269" duration="12872000" />
       <workItem from="1693168483615" duration="20281000" />
-      <workItem from="1693473865555" duration="3353000" />
+      <workItem from="1693473865555" duration="4802000" />
     </task>
     <servers />
   </component>

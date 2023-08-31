@@ -15,7 +15,7 @@ The package includes a demo dashboard application to show how the Mortgage class
 
 To run the demo, install the package 
 
-![parameterized_mortgage.Mortgage demo](parameterized_mortgage_demo.png)
+![](https://raw.githubusercontent.com/JonathanMair/parameterized_mortgage/main/parameterized_mortgage_demo.png)
 
 
 ## Usage
